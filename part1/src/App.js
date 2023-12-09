@@ -3,6 +3,7 @@ import Header from "./components/Header.jsx"
 import Total from "./components/Total.jsx"
 
 const App = () => {
+
   const course = 'Half Stack application development'
   const parts = [
     {
@@ -18,15 +19,14 @@ const App = () => {
       exercises: 14
     }
   ]
+  const total = parts[0].exercises + parts[1].exercises + parts[2].exercises
 
 
   return (
     <div>
       < Header name= {course} />
-      < Content part = {parts[0]}  />
-      < Content part = {parts[1]}  />
-      < Content part = {parts[2]}  />
-       < Total total = {parts[0].exercises + parts[1].exercises + parts[2].exercises} />
+      < Content parts = {parts}  />
+      < Total total = {total} />
     </div>
   )
 }
