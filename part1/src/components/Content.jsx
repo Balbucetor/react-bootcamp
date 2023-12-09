@@ -2,7 +2,7 @@ const Content =  (props) => {
 
     return (
         <div>
-            <p>Título: {props.part}. Ejercicios del capítulo:  {props.exercises}</p>    
+            <p>Título: {props.part.name}. Ejercicios del capítulo:  {props.part.exercises}</p>    
         </div>
     );
 }
