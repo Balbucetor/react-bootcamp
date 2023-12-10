@@ -10,13 +10,7 @@ const Boton = (props)=>{
 
 }
 
-const Estadisticas = ()=>{
-  return (
-    <div>
-      
-    </div>
-  )
-}
+
 
 
 const App = () => {
