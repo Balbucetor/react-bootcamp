@@ -1,34 +1,53 @@
-import Content from "./components/Content.jsx"
-import Header from "./components/Header.jsx"
-import Total from "./components/Total.jsx"
+import { useState } from "react"
+
+
+const Boton = (props)=>{
+
+  return (
+    <button onClick={props.onClick}  
+    >{props.text}</button>  
+  )
+
+}
+
+const Estadisticas = ()=>{
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
 
 const App = () => {
 
-  const course = {
-    name: 'Half Stack application development',
-    parts : [
-    {
-      name: 'Fundamentals of React',
-      exercises: 10
-    },
-    {
-      name: 'Using props to pass data',
-      exercises: 7
-    },
-    {
-      name: 'State of a component',
-      exercises: 14
-    }
-  ]
+  const [buena, setBuena] = useState(0)
+  const [regular, setRegular] = useState(0)
+  const [mala, setMala] = useState(0)
+    
+const Handlebuena = () => {
+  setBuena (buena + 1)
 }
-  
-
+const HandleRegular = () => {
+  setRegular (regular + 1)
+}
+const HandleMala = () => {
+  setMala (mala + 1)
+}
 
     return (
     <div>
-      < Header name= {course.name} />
-      < Content parts = {course.parts}  />
-      < Total parts = {course.parts} />
+      <h1>Deja tu opinion</h1>
+      <Boton onClick={Handlebuena} text="Buena" />
+      <Boton onClick={HandleRegular} text="Regular" />
+      <Boton onClick={HandleMala} text="Mala" />
+      <h2>Estadísticas</h2>
+      <p>Buenas : {buena}</p>
+      <p>Regulares: {regular}</p>
+      <p>Malas: {mala}</p>
+      <p>Opinione totales: {buena + mala+ regular}</p>
+      <p>Media: {((buena - mala)/ (buena + mala+ regular))}</p>
+      <p>Positivas : {(buena/(mala+buena+regular))*100} %</p>
     </div>
   )
 }
