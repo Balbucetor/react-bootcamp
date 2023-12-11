@@ -10,6 +10,34 @@ const Boton = (props)=>{
 
 }
 
+const Nota = ({texto})=>{
+  return (
+    <li > {texto} </li>
+  )
+}
+
+const Ganador = ({datos, puntos})=>{
+  const maximo = Math.max(...puntos)
+  console.log(maximo)
+  const indice = puntos.indexOf(maximo)
+  const mejorAnecdota = datos[indice]
+  if (maximo === 0) {
+    return (<p>Aún no se ha emitido ningún voto</p>)
+  }
+  return (
+    <div>
+      <p>La nota: {mejorAnecdota} </p>
+      <p>Es la mas votada con {maximo} apoyos</p>
+    </div>
+
+
+
+  )
+
+}
+
+
+
 
 const App = () => {
 
@@ -32,7 +60,7 @@ const App = () => {
     const nuevoIndice = (Math.floor(Math.random() * anecdotes.length))
     setSelected (nuevoIndice)
   }
-
+  console.log(puntos)
   const handleVotar = ()=>{
     const copiaPuntos = [...puntos] 
     copiaPuntos[selected] += 1
@@ -45,6 +73,14 @@ const App = () => {
       <p>Numero de votos de esta anécdota: {puntos[selected]}</p>
       <Boton onClick={handleNuevaAnecdota} text="Nueva anécdota" />
       <Boton onClick={handleVotar} text="Votar por esta anédota" />
+      <ol>
+        {anecdotes.map((nota, index)=>{
+          return <Nota key={index} texto={nota} /> 
+        })
+      }
+        </ol>
+      <Ganador datos={anecdotes} puntos={puntos} />  
+      
     </div>
   )
 }
