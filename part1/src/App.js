@@ -10,86 +10,41 @@ const Boton = (props)=>{
 
 }
 
-const LineaTabla = (props)=> {
-  if (props.texto === "Positivas"){
-    return  (
-      <tr>
-        <td>{props.texto}</td>
-        <td>{props.value} %</td>
-      </tr>
-    )
-  }
-  return  (
-    <tr>
-      <td>{props.texto}</td>
-      <td>{props.value}</td>
-    </tr>
-  )
-}
-
-const Estadisticas = ({clicks})=> {
-
-  const total = clicks.buena + clicks.regular + clicks.mala
-  const media = ((clicks.buena * 1 + clicks.regular * 0 + clicks.mala * (-1))/total)
-  const porcentaje = (clicks.buena * 100 / (total))
-
-  if (total === 0) {
-    return (<div>
-      No se han dado evaluaciones todavía
-    </div>
-  )
-    }
-  return (
-    <tbody>
-      <LineaTabla texto="Buenas" value={clicks.buena} />
-      <LineaTabla texto="Regulares" value={clicks.regular} />
-      <LineaTabla texto="Malas" value={clicks.mala} />
-      <LineaTabla texto="Total" value={total} />
-      <LineaTabla texto="Media" value={media.toFixed(2)} />
-      <LineaTabla texto="Positivas" value={porcentaje.toFixed(2)} />
-    </tbody>
-  )
-
-
-
-}
-
 
 const App = () => {
 
-  const [clicks, setClicks] = useState({
-    buena :0,
-    mala: 0,
-    regular:0
-  })
+  const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 10 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
+    'The only way to go fast, is to go well.'
+  ]
 
-const Handlebuena = () => {
-  setClicks ({...clicks, buena: clicks.buena + 1})
-  console.log("Click en buena")
-}
-const HandleRegular = () => {
-  setClicks ({...clicks, regular: clicks.regular + 1})
-}
+  const [selected, setSelected] = useState(0)
+  const [puntos, setPuntos] = useState(new Uint8Array(anecdotes.length))
 
-const HandleMala = () => {
-  setClicks ({...clicks, mala: clicks.mala + 1})
-}
 
-const handleReset = ()=>{
-  setClicks ({...clicks, buena: 0, regular: 0, mala: 0})
-}
+  const handleNuevaAnecdota = ()=>{
+    const nuevoIndice = (Math.floor(Math.random() * anecdotes.length))
+    setSelected (nuevoIndice)
+  }
 
- 
-    return (
+  const handleVotar = ()=>{
+    const copiaPuntos = [...puntos] 
+    copiaPuntos[selected] += 1
+    setPuntos(copiaPuntos)
+  }
+  
+  return (
     <div>
-      <h1>Deja tu opinion</h1>
-      <Boton onClick={Handlebuena} text="Buena" />
-      <Boton onClick={HandleRegular} text="Regular" />
-      <Boton onClick={HandleMala} text="Mala" />
-      <h2>Estadísticas</h2>
-      <Estadisticas clicks={clicks}/>
-      <br/>
-      <Boton onClick={handleReset} text="Poner a cero" />
+      <p>{anecdotes[selected]} Nº {selected}</p>
+      <p>Numero de votos de esta anécdota: {puntos[selected]}</p>
+      <Boton onClick={handleNuevaAnecdota} text="Nueva anécdota" />
+      <Boton onClick={handleVotar} text="Votar por esta anédota" />
     </div>
   )
 }
